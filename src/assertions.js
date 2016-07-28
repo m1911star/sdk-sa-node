@@ -59,17 +59,36 @@ function checkPattern(value) {
     return value;
 }
 
+function checkDateTimeValueType(key, value) {
+  var value = this[key];
+  switch (_ramda2.default.type(value)) {
+    case 'Number':
+    case 'String':
+    case 'Date':
+      return;
+    case 'Object':
+      if (typeof value.toDate === 'function') {
+        return;
+      }
+      throw new Error('Invalid time object');
+    default:
+      throw new Error('Invalid time object');
+  }
+}
+
 function checkValueType(key) {
     debug('checkValyeType: this[%s]', key);
     var value = this[key];
+    if (key === '$time') {
+      checkDateTimeValueType(key, value);
+      return;
+    }
     switch (_ramda2.default.type(value)) {
       case 'Number':
       case 'String':
       case 'Boolean':
       case 'Symbol':
       case 'Array':
-      case 'Date':
-      case 'Datetime':
           return;
       default:
           throw new Error('Property ' + key + ' is invalid: ' + value);
