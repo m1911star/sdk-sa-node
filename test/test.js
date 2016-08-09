@@ -3,7 +3,7 @@ var Submitter = require('../src/index').Submitter;
 var ram = require('ramda');
 var moment = require('moment');
 var sa = new SensorsAnalytics;
-var url = 'http://10.10.11.209:8006/sa?token=251b8f7d3f08d0b0';
+var url = 'http://{$service_name}.cloud.sensorsdata.cn:8006/sa?project={$project_name}&token={$project_token}';
 // Basic Usage
  sa.submitTo(url, {
      mode: 'track',
@@ -25,12 +25,10 @@ sa.registerSuperProperties({
 });
 
 // Track event
-sa.track('12345', 'userHappy');
+sa.track('12345', 'userHappyHappppppy');
 
 // Track event with custom properties
 sa.track('12345', 'newOrder', {
    orderId: '12345'
 });
-
-// Track event with specific time
 

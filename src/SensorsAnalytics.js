@@ -177,7 +177,7 @@ var SensorsAnalytics = function (_Subject) {
 
       var envelope = (0, _translators.snakenizeKeys)({
         type: type,
-        event: (0, _translators.pascal2Snake)(event),
+        event: event,
         time: (0, _translators.extractTimestamp)(properties),
         distinctId: distinctId,
         originalId: originalId,
