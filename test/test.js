@@ -4,6 +4,7 @@ var ram = require('ramda');
 var moment = require('moment');
 var sa = new SensorsAnalytics;
 var url = 'http://{$service_name}.cloud.sensorsdata.cn:8006/sa?project={$project_name}&token={$project_token}';
+var url = 'http://test-ztx-jsl-fjj.cloud.sensorsdata.cn:8006/sa?token=6dd46a0ac9c03a85';
 // Basic Usage
  sa.submitTo(url, {
      mode: 'track',

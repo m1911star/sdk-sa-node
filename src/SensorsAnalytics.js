@@ -80,8 +80,11 @@ var SensorsAnalytics = function (_Subject) {
       var callIndex = arguments[1];
 
       var codeProperties = (0, _translators.extractCodeProperties)(callIndex);
+      return {
+        properties: _ramda2.default.mergeAll([SDK_PROPERTIES, this.superProperties, (0, _translators.translateUserAgent)(properties)]),
+        lib: _ramda2.default.mergeAll([SDK_PROPERTIES, this.superProperties, codeProperties])
+      };
 
-      return _ramda2.default.mergeAll([SDK_PROPERTIES, this.superProperties, codeProperties, (0, _translators.translateUserAgent)(properties)]);
     }
   }, {
     key: 'track',
@@ -92,9 +95,9 @@ var SensorsAnalytics = function (_Subject) {
       (0, _assertions.checkPattern)(event, 'event');
       (0, _assertions.checkProperties)(eventProperties, _assertions.checkValueType);
 
-      var properties = this.superizeProperties(eventProperties, 4);
+      var superize = this.superizeProperties(eventProperties, 4);
 
-      this.internalTrack('track', { event: event, distinctId: distinctId, properties: properties });
+      this.internalTrack('track', { event: event, distinctId: distinctId, properties: superize.properties, lib: superize.lib });
     }
   }, {
     key: 'trackSignup',
@@ -105,13 +108,13 @@ var SensorsAnalytics = function (_Subject) {
       (0, _assertions.checkExists)(originalId, 'originalId');
       (0, _assertions.checkProperties)(eventProperties, _assertions.checkValueType);
 
-      var properties = this.superizeProperties(eventProperties, 4);
+      var superize = this.superizeProperties(eventProperties, 4);
 
       // $SignUp will be converted into $_sign_up
       // Comfirmed with SA guys, which doesn't matter
       // If it does matters, it can escaped with Symbol instead of string
       // By making pascal2Snake ignore Symbol
-      this.internalTrack('track_signup', { event: '$SignUp', distinctId: distinctId, originalId: originalId, properties: properties });
+      this.internalTrack('track_signup', { event: '$SignUp', distinctId: distinctId, originalId: originalId, properties: superize.properties, lib: superize.lib });
     }
   }, {
     key: 'profileSet',
@@ -174,6 +177,7 @@ var SensorsAnalytics = function (_Subject) {
       var distinctId = _ref.distinctId;
       var originalId = _ref.originalId;
       var properties = _ref.properties;
+      var lib = _ref.lib;
 
       var envelope = (0, _translators.snakenizeKeys)({
         type: type,
@@ -181,7 +185,8 @@ var SensorsAnalytics = function (_Subject) {
         time: (0, _translators.extractTimestamp)(properties),
         distinctId: distinctId,
         originalId: originalId,
-        properties: (0, _assertions.checkProperties)((0, _translators.snakenizeKeys)(properties), _assertions.checkPattern)
+        properties: (0, _assertions.checkProperties)((0, _translators.snakenizeKeys)(properties), _assertions.checkPattern),
+        lib: lib
       });
 
       debug('envelope: %j', envelope);

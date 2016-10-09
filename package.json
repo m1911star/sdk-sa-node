@@ -3,6 +3,13 @@
   "version": "1.0.7",
   "description": "",
   "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/m1911star/sdk-sa-node.git"
+  },
+  "engines": {
+    "node": "0.10.35"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

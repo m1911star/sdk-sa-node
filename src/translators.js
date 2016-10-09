@@ -98,7 +98,7 @@ function parseCallInfo(text) {
     lineNumber: matches[8] || matches[12],
     columnNumber: matches[9] || matches[13],
     className: matches[4],
-    functionName: matches[5]
+    functionName: matches[5] === '<anonymous>' ? '': matches[5]
   };
 }
 function extractCodeProperties(callerIndex) {
